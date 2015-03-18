@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\begin{document}
+
+<<ebolaOutbreak.allCountries, warning=F, echo=F>>=
+#install.packages("rvest", repos="http://cran.us.r-project.org")
+library("rvest")
+URL <- html("http://en.wikipedia.org/wiki/Ebola_virus_epidemic_in_West_Africa")
+dataframe.ebola <- html_table(html_nodes(URL, "table")[[2]])
+
+#ebola.country <- dataframe.ebola[1:9,1]
+
+#total cases
+totalcases <- dataframe.ebola[10,"Cases"]
+
+#total deaths
+totaldeaths <- dataframe.ebola[10,"Deaths"]
+
+
+@
+
+<<ebolaOutbreak.US, warning=F, echo=F>>=
+#install.packages("rvest", repos="http://cran.us.r-project.org")
+library("rvest")
+URL <- html("http://en.wikipedia.org/wiki/Ebola_virus_epidemic_in_West_Africa")
+dataframe.ebola <- html_table(html_nodes(URL, "table")[[2]])
+
+ebola.US <- dataframe.ebola[6,1]
+
+#US cases
+ebola.casesUS <- dataframe.ebola[6,"Cases"]
+
+#US deaths
+ebola.deathsUS <- dataframe.ebola[6,"Deaths"]
+@
+
+\section*{Ebola Virus Epidemic In West Africa by Oluwabukola Ibrahim}
+The World Health Organization (WHO) and respective governments have reported a total of \(\Sexpr{totalcases}\) suspected cases and \(\Sexpr{totaldeaths}\) deaths, though the WHO believes that this substantially understates the magnitude of the outbreak. In the United States there has been \(\Sexpr{ebola.casesUS}\) reported cases and \(\Sexpr{ebola.deathsUS}\) deaths
+
+\end{document}

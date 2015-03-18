@@ -1,0 +1,62 @@
+<html>
+
+<head>
+<title>Mount Everest Deaths by Month</title>
+</head>
+
+<body>
+
+<p>Mount Everest: Death by Month</p>
+
+<!--begin.rcode, warning=F, echo=F
+library("rvest")
+library(ggplot2)
+
+URL <- html("http://en.wikipedia.org/wiki/List_of_people_who_died_climbing_Mount_Everest")
+dataframe.everest <- html_table(html_nodes(URL, "table")[[1]], fill=TRUE)
+
+#retrieves the name and date column from the URL table. 
+dataframe.death <- dataframe.everest[c(1,2)]
+
+#1 represents January, 2 is for february, ... 12 is for December
+
+dataframe.1 <- nrow(subset(dataframe.death, grepl(".Jan",Date)))
+dataframe.2 <- nrow(subset(dataframe.death, grepl(".Feb",Date)))
+dataframe.3 <- nrow(subset(dataframe.death, grepl(".Mar",Date)))
+dataframe.4 <- nrow(subset(dataframe.death, grepl(".Apr",Date)))
+dataframe.5 <- nrow(subset(dataframe.death, grepl(".May",Date)))
+dataframe.6 <- nrow(subset(dataframe.death, grepl(".Jun",Date)))
+dataframe.7 <- nrow(subset(dataframe.death, grepl(".Jul",Date)))
+dataframe.8 <- nrow(subset(dataframe.death, grepl(".Aug",Date)))
+dataframe.9 <- nrow(subset(dataframe.death, grepl(".Sept",Date)))
+dataframe.10 <- nrow(subset(dataframe.death, grepl(".Oct",Date)))
+dataframe.11 <- nrow(subset(dataframe.death, grepl(".Nov",Date)))
+dataframe.12 <- nrow(subset(dataframe.death, grepl(".Dec",Date)))
+
+#dataframe.monthDeath will be used in the bar chart plot to show the deaths by month.
+dataframe.monthDeath <- c(dataframe.1, dataframe.2, dataframe.3, dataframe.4, dataframe.5, dataframe.6, dataframe.7, dataframe.8, dataframe.9, dataframe.10, dataframe.11, dataframe.12)
+
+#total.death will be used for checking the total number of death reported for all the months
+#it should be 256 deaths in total.
+total.death <- sum(dataframe.monthDeath)
+
+#plot graph
+dataframe.month <- c("JAN", "FEB", "MAR", "APR",  "MAY",  "JUN", "JUL",  "AUG",  "SEPT", "OCT", "NOV", "DEC")
+
+dataframe.death <-c(dataframe.1, dataframe.2, dataframe.3, dataframe.4, dataframe.5, dataframe.6, dataframe.7, dataframe.8, dataframe.9, dataframe.10, dataframe.11, dataframe.12)
+
+dataframe.deathByMonth <- data.frame(dataframe.month, dataframe.death)
+
+dataframe.deathByMonth$dataframe.month <- factor(dataframe.deathByMonth$dataframe.month, levels=c("JAN", "FEB", "MAR", "APR",  "MAY",  "JUN", "JUL",  "AUG",  "SEPT", "OCT", "NOV", "DEC")) 
+
+
+
+g <- ggplot(dataframe.deathByMonth, aes(x=dataframe.month, y=dataframe.death)) + geom_bar(stat="identity") 
+g + scale_fill_grey() + labs(x="Month", y="Number of Death") + scale_y_continuous(breaks = seq(0, 200, 20))
+
+end.rcode-->
+
+
+
+</body>
+</html>
